@@ -1,5 +1,5 @@
 import './App.css'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Paper, Button, ToggleButtonGroup, ToggleButton } from '@mui/material'
 import { makeStyles } from '@material-ui/core/styles'
 import SearchBar from 'material-ui-search-bar'
@@ -73,6 +73,12 @@ function App() {
       setFirstLoad(false)
     }
   }
+
+  useEffect(() => {
+    if (mutation.isSuccess) {
+      setNames(mutation.data.data)
+    }
+  }, [mutation])
 
   const requestSearch = (searchedVal) => {
     const filteredItems = originalNames.filter((item) => {

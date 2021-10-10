@@ -45,3 +45,5 @@ TODO: API provides "put" -functionality, so we can update a single entry from da
 TODO: Add option to send whole namelist through UI. Currently this is done through API request using postman
 
 TODO: UI Fixes. Amount column can be moved to right side of view, and there can be some margin / padding added on the sides
+
+TODO: Add tests...
