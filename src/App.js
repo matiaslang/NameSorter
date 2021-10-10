@@ -131,7 +131,6 @@ function App() {
             variant='contained'
             sx={{ margin: 2 }}
             onClick={(e) => {
-              e.preventDefault()
               mutation.mutate({
                 id: new Date(),
                 title: 'Fetch names from DB',
