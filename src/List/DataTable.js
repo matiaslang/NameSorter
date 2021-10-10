@@ -10,7 +10,8 @@ import TableRow from '@mui/material/TableRow'
 
 const columns = [
   { id: 'name', label: 'Name', minWidth: 170 },
-  { id: 'amount', label: 'Amount', minWidth: 170, align: 'right' },
+  { id: 'amount', label: 'Amount', minWidth: 170, align: 'center' },
+  //{ id: 'modify', label: 'Modify value', minWidth: 170, align: 'right' },
 ]
 
 const DataTable = ({ data }) => {
