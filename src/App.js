@@ -66,17 +66,11 @@ function App() {
     )
   })
 
-  if (mutation.isSuccess && firstLoad === true) {
-    if (names !== mutation.data.data) {
-      setNames(mutation.data.data)
-      setOriginalNames(mutation.data.data)
-      setFirstLoad(false)
-    }
-  }
-
   useEffect(() => {
     if (mutation.isSuccess) {
       setNames(mutation.data.data)
+      setOriginalNames(mutation.data.data)
+      mutation.reset()
     }
   }, [mutation])
 
@@ -131,6 +125,16 @@ function App() {
           onCancelSearch={() => cancelSearch()}
           placeholder='filter'
         />
+        <ToggleButtonGroup
+          sx={{ margin: 2 }}
+          color='primary'
+          value={sorting}
+          exclusive
+          onChange={handleChange}
+        >
+          <ToggleButton value='amount'>Amount</ToggleButton>
+          <ToggleButton value='alphabetically'>Alphabetically</ToggleButton>
+        </ToggleButtonGroup>
         <DataLoaded mutation={mutation} />
         <Paper variant='outlined' sx={{ padding: 1 }}>
           <Button
@@ -145,15 +149,6 @@ function App() {
           >
             Fetch names from DB
           </Button>
-          <ToggleButtonGroup
-            color='primary'
-            value={sorting}
-            exclusive
-            onChange={handleChange}
-          >
-            <ToggleButton value='amount'>Amount</ToggleButton>
-            <ToggleButton value='alphabetically'>Alphabetically</ToggleButton>
-          </ToggleButtonGroup>
         </Paper>
       </Paper>
     </div>
