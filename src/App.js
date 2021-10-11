@@ -76,7 +76,8 @@ function App() {
 
   const requestSearch = (searchedVal) => {
     const filteredItems = originalNames.filter((item) => {
-      return item.name.toLowerCase().includes(searchedVal.toLowerCase())
+      return item.name.toLowerCase().startsWith(searchedVal.toLowerCase())
+      //return item.name.toLowerCase().includes(searchedVal.toLowerCase())
     })
     setNames(filteredItems)
   }
