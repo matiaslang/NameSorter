@@ -14,6 +14,41 @@ const columns = [
   //{ id: 'modify', label: 'Modify value', minWidth: 170, align: 'right' },
 ]
 
+const TableBodyModifier = ({ data, page, rowsPerPage }) => {
+  if (data.length > 0) {
+    return (
+      <TableBody>
+        {data
+          .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+          .map((row) => {
+            return (
+              <TableRow hover role='checkbox' tabIndex={-1} key={row.code}>
+                {columns.map((column) => {
+                  const value = row[column.id]
+                  return (
+                    <TableCell key={column.id} align={column.align}>
+                      {column.format && typeof value === 'number'
+                        ? column.format(value)
+                        : value}
+                    </TableCell>
+                  )
+                })}
+              </TableRow>
+            )
+          })}
+      </TableBody>
+    )
+  }
+  return (
+    <TableBody>
+      <TableRow>
+        <TableCell>No results found..</TableCell>
+        <TableCell></TableCell>
+      </TableRow>
+    </TableBody>
+  )
+}
+
 const DataTable = ({ data }) => {
   const [page, setPage] = React.useState(0)
   const [rowsPerPage, setRowsPerPage] = React.useState(10)
@@ -51,26 +86,11 @@ const DataTable = ({ data }) => {
               ))}
             </TableRow>
           </TableHead>
-          <TableBody>
-            {data
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
-                return (
-                  <TableRow hover role='checkbox' tabIndex={-1} key={row.code}>
-                    {columns.map((column) => {
-                      const value = row[column.id]
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                          {column.format && typeof value === 'number'
-                            ? column.format(value)
-                            : value}
-                        </TableCell>
-                      )
-                    })}
-                  </TableRow>
-                )
-              })}
-          </TableBody>
+          <TableBodyModifier
+            data={data}
+            page={page}
+            rowsPerPage={rowsPerPage}
+          />
         </Table>
       </TableContainer>
       <TablePagination
