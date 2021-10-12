@@ -1,4 +1,4 @@
-import { getParameters } from './getParameters'
+import GetParameters from './GetParameters'
 import axios from 'axios'
 
 const aws = require('aws-sdk')
@@ -10,7 +10,7 @@ const parameterNames = [
 ]
 
 const getParams = async () => {
-  var parameters = await getParameters(parameterNames, 'eu-north-1')
+  var parameters = await GetParameters(parameterNames, 'eu-north-1')
   console.log('PARAMETERS FOUND2')
   console.log(parameters['/amplify/d1w9s5avni0ilk/default/audience'])
   return parameters

@@ -2,7 +2,7 @@ const AWS = require('aws-sdk')
 
 let ssm
 
-const getParameters = async (parameterNames, region) => {
+const GetParameters = async (parameterNames, region) => {
   if (!ssm) {
     ssm = new AWS.SSM({
       region: region,
@@ -28,4 +28,4 @@ const formatParameters = (parameters) => {
   }, {})
 }
 
-module.exports = { getParameters }
+export default GetParameters
