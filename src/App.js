@@ -6,23 +6,47 @@ import SearchBar from 'material-ui-search-bar'
 import { useMutation, useQuery } from 'react-query'
 import axios from 'axios'
 import DataTable from './List/DataTable'
+import GetParameters, { getParameters } from './getParameters'
+import GetToken from './GetToken'
+
+const aws = require('aws-sdk')
+
+/*
+const GetParameters = async () => {
+  console.log('TESTING VALUE')
+  console.log(process.env)
+  return await new aws.SSM({
+    region: 'eu-north-1',
+    accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
+  })
+    .getParameters({
+      Names: ['client_secret', 'client_id', 'audience'].map(
+        (secretName) => process.env[secretName]
+      ),
+      WithDecryption: true,
+    })
+    .promise()
+}
+
+const GetSSMParameters = () => {
+  var params = {
+    Names: ['client_secret', 'client_id', 'audience'],
+    WithDecryption: false,
+  }
+  aws.SSM.getParameters(params, function (err, data) {
+    if (err) console.log(err, err.stack)
+    // an error occurred
+    else console.log(data)
+  })
+}
+*/
 
 const useStyles = makeStyles({
   table: {
     minWidth: 200,
   },
 })
-
-async function fetchData() {
-  var result = null
-  try {
-    result = await axios.get('https://nameapi.matiaslang.info/api/names')
-    console.log(result.data)
-  } catch (error) {
-    console.error(error)
-  }
-  return result
-}
 
 const originalItems = [
   { name: 'Mikko', amount: 20 },
@@ -55,17 +79,24 @@ function App() {
   const [names, setNames] = useState(originalItems)
   const [originalNames, setOriginalNames] = useState(originalItems)
   const [searched, setSearched] = useState('')
-  const classes = useStyles()
   const [firstLoad, setFirstLoad] = useState(true)
+  const classes = useStyles()
+
+  require('dotenv').config()
 
   const mutation = useMutation((newJson) => {
     return axios.get(
       'https://nameapi.matiaslang.info/api/names',
-      { headers: { 'Content-Type': 'application/json' } },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlREMTl0VHZMT0Z4bmhXODVWNVp1ciJ9.eyJpc3MiOiJodHRwczovL2Rldi13dWhiMnoyci51cy5hdXRoMC5jb20vIiwic3ViIjoiWFB3WUJIUElOS1BLR3MyRzdrREQzZHFmd1JjZVdKdVRAY2xpZW50cyIsImF1ZCI6Imh0dHBzOi8vYXV0aDAtand0LWF1dGhvcml6ZXIiLCJpYXQiOjE2MzQwNzIzNDQsImV4cCI6MTYzNDE1ODc0NCwiYXpwIjoiWFB3WUJIUElOS1BLR3MyRzdrREQzZHFmd1JjZVdKdVQiLCJzY29wZSI6ImdldE5hbWVzIiwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIn0.JhR5RDcgR4E8TjFo-EfoM0TRT2GWWrefeJuBRXxylA9m8D3fBIjPubQWxTJeJ7TKXnYGsrLAKmzXJOG3v2Ucqbl9WZ9H0dWlRg0aoFWKHJzBfYwGlIHxhIqVLnFDTGLXgUFs7hGYHRMOaPrhMiTtrKMD88WT3xsu-ih1jvfI3WCmP2uFuY90d60R0eUo4fyizOKRuzOBI99FbCP0lrg1WfmtI0DixVdpJ38kuSlaWyD-Hrp2M4V184mKnu1LNvrRCsEXU3_Y-gjLtMu6eYGcyma8InxIVAbTXt-JkBsov2pvyowBPycu5vrNtQQvusiJhCchlotClqwcLkKLdJ5rAg`,
+        },
+      },
       newJson
     )
   })
-
+  console.log(process.env)
   useEffect(() => {
     if (mutation.isSuccess) {
       setNames(mutation.data.data)
@@ -108,12 +139,18 @@ function App() {
       )
     }
     if (mutation.isError) {
-      return <div>There was an error: {mutation.error}</div>
+      return (
+        <div>
+          <DataTable data={names} />
+          There was an error with fetching new data: {mutation.error.message}
+        </div>
+      )
     }
     if (mutation.isSuccess) {
       return <DataTable data={names} />
+    } else {
+      return <DataTable data={names} />
     }
-    return <DataTable data={names} />
   }
 
   return (
