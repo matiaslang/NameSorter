@@ -1,5 +1,5 @@
 import axios from 'axios'
-import GetToken from './getToken'
+import GetToken from './GetToken'
 
 const client = axios.create({
   baseURL: 'https://nameapi.matiaslang.info/api/names',
