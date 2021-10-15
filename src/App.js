@@ -56,7 +56,8 @@ function App() {
       {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlREMTl0VHZMT0Z4bmhXODVWNVp1ciJ9.eyJpc3MiOiJodHRwczovL2Rldi13dWhiMnoyci51cy5hdXRoMC5jb20vIiwic3ViIjoiWFB3WUJIUElOS1BLR3MyRzdrREQzZHFmd1JjZVdKdVRAY2xpZW50cyIsImF1ZCI6Imh0dHBzOi8vYXV0aDAtand0LWF1dGhvcml6ZXIiLCJpYXQiOjE2MzQwNzIzNDQsImV4cCI6MTYzNDE1ODc0NCwiYXpwIjoiWFB3WUJIUElOS1BLR3MyRzdrREQzZHFmd1JjZVdKdVQiLCJzY29wZSI6ImdldE5hbWVzIiwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIn0.JhR5RDcgR4E8TjFo-EfoM0TRT2GWWrefeJuBRXxylA9m8D3fBIjPubQWxTJeJ7TKXnYGsrLAKmzXJOG3v2Ucqbl9WZ9H0dWlRg0aoFWKHJzBfYwGlIHxhIqVLnFDTGLXgUFs7hGYHRMOaPrhMiTtrKMD88WT3xsu-ih1jvfI3WCmP2uFuY90d60R0eUo4fyizOKRuzOBI99FbCP0lrg1WfmtI0DixVdpJ38kuSlaWyD-Hrp2M4V184mKnu1LNvrRCsEXU3_Y-gjLtMu6eYGcyma8InxIVAbTXt-JkBsov2pvyowBPycu5vrNtQQvusiJhCchlotClqwcLkKLdJ5rAg`,
+          //todo: this is temporary, have to modify so that the token is fetched for every request. Currently the token is valid for a day
+          Authorization: `Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlREMTl0VHZMT0Z4bmhXODVWNVp1ciJ9.eyJpc3MiOiJodHRwczovL2Rldi13dWhiMnoyci51cy5hdXRoMC5jb20vIiwic3ViIjoiWFB3WUJIUElOS1BLR3MyRzdrREQzZHFmd1JjZVdKdVRAY2xpZW50cyIsImF1ZCI6Imh0dHBzOi8vYXV0aDAtand0LWF1dGhvcml6ZXIiLCJpYXQiOjE2MzQzMDc4NDMsImV4cCI6MTYzNDM5NDI0MywiYXpwIjoiWFB3WUJIUElOS1BLR3MyRzdrREQzZHFmd1JjZVdKdVQiLCJzY29wZSI6ImdldE5hbWVzIiwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIn0.LwIZfcWGWAlHiPmJuO5CyPQ0a63T2uHOLf147plE9XWTb_iXB-9wFPZajbaepJLLVylYpleHI94VK95nohEF2AB4kO0ea6qtOBBey0H4JNdjzPZVfyn-z1QHBo6yTejEXuGGEJ5XFvpnuU8WK0F60QAmatnQZFMv26v2J8Vz4xFDPHJGz20yV_v9wgqOb0B-dliRr57r1r7d-fz2yZUHj8UqS6gHnFRcYnzHeofK-zR2_vgM5F_ejdw9XRIQD9XqzfdjD2R76jJ81lQtN9uWN8ZLPG-G1xEMa8pFMhGUX-DeeBqKDILtRB1ps_9ZpIrjJWSLbMaqRgllOdsgdmO8-Q`,
         },
       },
       newJson
@@ -74,7 +75,6 @@ function App() {
   const requestSearch = (searchedVal) => {
     const filteredItems = originalNames.filter((item) => {
       return item.name.toLowerCase().startsWith(searchedVal.toLowerCase())
-      //return item.name.toLowerCase().includes(searchedVal.toLowerCase())
     })
     setNames(filteredItems)
   }
